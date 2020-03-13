@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SELECT &mdash; Goat 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="INSERT .. VALUES" href="insert-values.html" />
+    <link rel="prev" title="A basic example" href="../example.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Goat
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../datatype.html">Datatypes and converter</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The query builder</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../example.html">A basic example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SELECT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#selecting-data">Selecting data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">SELECT *</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#select-column1-column2">SELECT column1, column2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#select-column1-as-a-column2-as-b">SELECT column1 AS a, column2 AS b</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abitrary-expressions">Abitrary expressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#groups-aggregates">Groups / aggregates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#joining-tables">Joining tables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#left-join">LEFT JOIN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#right-join">RIGHT JOIN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-modes">Other modes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#group-by">GROUP BY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#order-by">ORDER BY</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#column">Column</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expression">Expression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nulls-first-last">NULLS [FIRST, LAST]</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#where-predicates">WHERE (predicates)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#having-predicates">HAVING (predicates)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select-for-update">SELECT .. FOR UPDATE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="insert-values.html">INSERT .. VALUES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insert-query.html">INSERT .. SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html">UPDATE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delete.html">DELETE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="where.html">WHERE (predicates)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="with.html">WITH (Common Table Expressions)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../result.html">The result iterator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Goat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">The query builder</a> &raquo;</li>
+        
+      <li>SELECT</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/query/impl/select.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="select">
+<h1>SELECT<a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">FROM</span></code> clause relation is provided in the object constructor accompagnied by the main
+from table alias:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+<div class="section" id="selecting-data">
+<h2>Selecting data<a class="headerlink" href="#selecting-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>SELECT *<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;t.*&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">t</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+<p>Please also note that if you omit any <code class="docutils literal notranslate"><span class="pre">column*()</span></code> calls, the query builder will
+automatically set the columns to <code class="docutils literal notranslate"><span class="pre">*</span></code>, for example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">some_table</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you omit columns and let the query builder use <code class="docutils literal notranslate"><span class="pre">*</span></code>, it will not be prefixed
+with the table name, in case where you join multiple tables altogether, <strong>it will</strong>
+<strong>select everything from every table</strong>.</p>
+</div>
+</div>
+<div class="section" id="select-column1-column2">
+<h3>SELECT column1, column2<a class="headerlink" href="#select-column1-column2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;t.column1&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;t.column2&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;t.column1&#39;</span><span class="p">,</span> <span class="s1">&#39;t.column2&#39;</span><span class="p">])</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Are both equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">t</span><span class="p">.</span><span class="n">column1</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">column2</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Strings such as <code class="docutils literal notranslate"><span class="pre">table.column</span></code> will be parsed and the dot will be interpreted:
+this means that once escaped, the generated SQL query will look like:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t&quot;</span><span class="p">.</span><span class="ss">&quot;column1&quot;</span><span class="p">,</span> <span class="ss">&quot;t&quot;</span><span class="p">.</span><span class="ss">&quot;column2&quot;</span> <span class="k">FROM</span> <span class="ss">&quot;some_table&quot;</span> <span class="ss">&quot;t&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="select-column1-as-a-column2-as-b">
+<h3>SELECT column1 AS a, column2 AS b<a class="headerlink" href="#select-column1-as-a-column2-as-b" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;column1&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;column2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;a&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;column1&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;column2&#39;</span><span class="p">])</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Are both equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">column1</span> <span class="k">AS</span> <span class="n">a</span><span class="p">,</span> <span class="n">column2</span> <span class="k">AS</span> <span class="n">b</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">columns()</span></code> method, you can mix both keyed and non keyed
+entries in the array: those with non numeric and string keys will be aliased
+using the key.</p>
+<p>Key is the alias because you can select the same alias only once, but you use
+the same column more than once.</p>
+</div>
+<p>Mixing an array with numeric and string keys when calling <code class="docutils literal notranslate"><span class="pre">columns()</span></code>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span>
+        <span class="s1">&#39;a&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;column1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;column2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;count_foo&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\Goat\Query\ExpressionRaw</span><span class="p">(</span><span class="s1">&#39;COUNT(foo)&#39;</span><span class="p">),</span>
+    <span class="p">])</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
+    <span class="n">column1</span> <span class="k">AS</span> <span class="n">a</span><span class="p">,</span>
+    <span class="n">column2</span><span class="p">,</span>
+    <span class="k">COUNT</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="k">AS</span> <span class="n">count_foo</span>
+<span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="abitrary-expressions">
+<h3>Abitrary expressions<a class="headerlink" href="#abitrary-expressions" title="Permalink to this headline">¶</a></h3>
+<p>You can pass <strong>any</strong> SQL in the SELECT clause:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s1">&#39;COUNT(foo)&#39;</span><span class="p">,</span> <span class="s1">&#39;count_foo&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;column2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="k">AS</span> <span class="n">count_foo</span><span class="p">,</span> <span class="n">column2</span> <span class="k">AS</span> <span class="n">b</span><span class="p">,</span> <span class="n">column2</span> <span class="k">AS</span> <span class="n">b</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that <strong>you can pass any SQL including invalid one</strong>.</p>
+</div>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">ExpressionRaw</span></code> instances:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Goat\Query\ExpressionRaw</span><span class="p">(</span><span class="s1">&#39;COUNT(foo)&#39;</span><span class="p">),</span> <span class="s1">&#39;count_foo&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="k">AS</span> <span class="n">count_foo</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="groups-aggregates">
+<h3>Groups / aggregates<a class="headerlink" href="#groups-aggregates" title="Permalink to this headline">¶</a></h3>
+<p>Use arbitrary expression for using aggregation:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s1">&#39;SUM(amount)&#39;</span><span class="p">,</span> <span class="s1">&#39;total_amount&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="nx">product</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">product</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total_amount</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="joining-tables">
+<h2>Joining tables<a class="headerlink" href="#joining-tables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="left-join">
+<h3>LEFT JOIN<a class="headerlink" href="#left-join" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;table_a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">leftJoin</span><span class="p">(</span><span class="s1">&#39;table_b&#39;</span><span class="p">,</span> <span class="s1">&#39;a.id = b.id&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;table_a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">);</span>
+<span class="nv">$where</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">leftJoinWhere</span><span class="p">(</span><span class="s1">&#39;table_b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="nv">$where</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;a.id = b.id&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">table_a</span> <span class="n">a</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">table_b</span> <span class="n">b</span>
+    <span class="k">ON</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">id</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="right-join">
+<h3>RIGHT JOIN<a class="headerlink" href="#right-join" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;table_a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">innerJoin</span><span class="p">(</span><span class="s1">&#39;table_b&#39;</span><span class="p">,</span> <span class="s1">&#39;a.id = b.id&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;table_a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">);</span>
+<span class="nv">$where</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">innerJoinWhere</span><span class="p">(</span><span class="s1">&#39;table_b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="nv">$where</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;a.id = b.id&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">table_a</span> <span class="n">a</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">table_b</span> <span class="n">b</span>
+    <span class="k">ON</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">id</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-modes">
+<h3>Other modes<a class="headerlink" href="#other-modes" title="Permalink to this headline">¶</a></h3>
+<p>You may arbitrary JOIN using a custom JOIN statement by setting the <cite>join()</cite> 4th
+parameter or the <cite>joinWhere()</cite> 3rd parameter:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;table_a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;table_b&#39;</span><span class="p">,</span> <span class="s1">&#39;a.id = b.id&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">JOIN_RIGHT_OUTER</span><span class="p">);</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;table_a&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">);</span>
+<span class="nv">$where</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">joinWhere</span><span class="p">(</span><span class="s1">&#39;table_b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">JOIN_RIGHT_OUTER</span><span class="p">);</span>
+<span class="nv">$where</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;a.id = b.id&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">table_a</span> <span class="n">a</span>
+<span class="k">RIGHT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">table_b</span> <span class="n">b</span>
+    <span class="k">ON</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">id</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="group-by">
+<h2>GROUP BY<a class="headerlink" href="#group-by" title="Permalink to this headline">¶</a></h2>
+<p>GROUPing BY is as easy as:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;SUM(t.a)&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;t.b&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">a</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">b</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="order-by">
+<h2>ORDER BY<a class="headerlink" href="#order-by" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Default ordering is always <cite>ASC</cite>.</p>
+</div>
+<div class="section" id="column">
+<h3>Column<a class="headerlink" href="#column" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;t.a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;t.b&#39;</span><span class="p">,</span> <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">ORDER_DESC</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">a</span> <span class="k">ASC</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">b</span> <span class="k">DESC</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expression">
+<h3>Expression<a class="headerlink" href="#expression" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderByExpression</span><span class="p">(</span><span class="s">&lt;&lt;&lt;</span><span class="dl">SQL</span><span class="s"></span>
+<span class="s">CASE</span>
+<span class="s">    WHEN a = &#39;one&#39; THEN 1</span>
+<span class="s">    WHEN a = &#39;two&#39;&#39; THEN 2</span>
+<span class="s">    ELSE NULL</span>
+<span class="s">END</span>
+<span class="dl">SQL</span>
+    <span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span>SELECT *
+FROM some_table t
+ORDER BY (
+    CASE
+        WHEN a = &#39;one&#39; THEN 1
+        WHEN a = &#39;two&#39;&#39; THEN 2
+        ELSE NULL
+    END
+) ASC
+</pre></div>
+</div>
+</div>
+<div class="section" id="nulls-first-last">
+<h3>NULLS [FIRST, LAST]<a class="headerlink" href="#nulls-first-last" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span>
+        <span class="s1">&#39;t.a&#39;</span><span class="p">,</span>
+        <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">ORDER_ASC</span><span class="p">,</span>
+        <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">NULL_FIRST</span>
+    <span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">a</span> <span class="k">ASC</span> <span class="n">NULLS</span> <span class="k">FIRST</span>
+</pre></div>
+</div>
+<p>And:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span>
+        <span class="s1">&#39;t.a&#39;</span><span class="p">,</span>
+        <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">ORDER_ASC</span><span class="p">,</span>
+        <span class="nx">\Goat\Query\Query</span><span class="o">::</span><span class="na">NULL_LAST</span>
+    <span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">t</span><span class="p">.</span><span class="n">a</span> <span class="k">ASC</span> <span class="n">NULLS</span> <span class="k">LAST</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="where-predicates">
+<h2>WHERE (predicates)<a class="headerlink" href="#where-predicates" title="Permalink to this headline">¶</a></h2>
+<p>Please read the <a class="reference internal" href="where.html#query-builder-where"><span class="std std-ref">where clause and predicates documentation</span></a>.</p>
+</div>
+<div class="section" id="having-predicates">
+<h2>HAVING (predicates)<a class="headerlink" href="#having-predicates" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">HAVING</span></code> clause behavior is stricly identical to <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause, except that:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">condition()</span></code> becomes <code class="docutils literal notranslate"><span class="pre">havingCondition()</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expression()</span></code> becomes <code class="docutils literal notranslate"><span class="pre">havingExpression()</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getWhere()</span></code> becomes <code class="docutils literal notranslate"><span class="pre">getHaving()</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>Method signature are all the same, please refer to the
+<a class="reference internal" href="where.html#query-builder-where"><span class="std std-ref">where clause and predicates documentation</span></a>.</p>
+<p>As a brief example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">havingExpression</span><span class="p">(</span><span class="s1">&#39;COUNT(a) = ?&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">some_table</span>
+<span class="k">WHERE</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span>
+<span class="k">HAVING</span>
+   <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+   <span class="k">AND</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-for-update">
+<h2>SELECT .. FOR UPDATE<a class="headerlink" href="#select-for-update" title="Permalink to this headline">¶</a></h2>
+<p>Simply call the <code class="docutils literal notranslate"><span class="pre">forUpdate()</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">forUpdate</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="k">c</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span> <span class="k">FOR</span> <span class="k">UPDATE</span>
+</pre></div>
+</div>
+<p>Moreover, if you do not wish to fetch the result, you may also call the <code class="docutils literal notranslate"><span class="pre">performOnly()</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">forUpdate</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">performOnly</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to (when driver supports it, such as PostgreSQL):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">PERFORM</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="k">c</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span> <span class="k">FOR</span> <span class="k">UPDATE</span>
+</pre></div>
+</div>
+<p>And will fallback on (when driver don’t support <code class="docutils literal notranslate"><span class="pre">PERFORM</span></code>):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="k">c</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span> <span class="k">FOR</span> <span class="k">UPDATE</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="insert-values.html" class="btn btn-neutral float-right" title="INSERT .. VALUES" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../example.html" class="btn btn-neutral float-left" title="A basic example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

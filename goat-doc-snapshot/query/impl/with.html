@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>WITH (Common Table Expressions) &mdash; Goat 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The result iterator" href="../../result.html" />
+    <link rel="prev" title="WHERE (predicates)" href="where.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Goat
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../datatype.html">Datatypes and converter</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The query builder</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../example.html">A basic example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select.html">SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insert-values.html">INSERT .. VALUES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insert-query.html">INSERT .. SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html">UPDATE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delete.html">DELETE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="where.html">WHERE (predicates)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WITH (Common Table Expressions)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../result.html">The result iterator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Goat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">The query builder</a> &raquo;</li>
+        
+      <li>WITH (Common Table Expressions)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/query/impl/with.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="with-common-table-expressions">
+<h1>WITH (Common Table Expressions)<a class="headerlink" href="#with-common-table-expressions" title="Permalink to this headline">¶</a></h1>
+<p>All query implementations benefit from the <strong>Common Table Expressions</strong> (<em>CTE</em>) as
+long as the underlaying database engine supports it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We recommend reading
+<a class="reference external" href="https://www.postgresql.org/docs/current/static/queries-with.html">PostgreSQL official WITH documentation</a>
+for more information about this feature.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This API <strong>CTE implementation is incomplete</strong>, it does not allow you to write recursive
+CTEs yet.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">WITH</span></code> statement is a coma-separated list of table expressions, this API only supports
+<code class="docutils literal notranslate"><span class="pre">SELECT</span></code> table expression.</p>
+<p>This API allows you to set any number of table expressions, with two different ways:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>either create a select query using a runner, and set it as a with statement using
+the <code class="docutils literal notranslate"><span class="pre">with($alias,</span> <span class="pre">$select)</span></code> method,</p></li>
+<li><p>or call the <code class="docutils literal notranslate"><span class="pre">createWith($alias,</span> <span class="pre">$relation)</span></code> method.</p></li>
+</ul>
+</div></blockquote>
+<p>Consider the following SQL query (from PostgreSQL official documentation):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">WITH</span> <span class="n">regional_sales</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="n">region</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total_sales</span>
+    <span class="k">FROM</span> <span class="n">orders</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">region</span>
+<span class="p">),</span> <span class="n">top_regions</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span> <span class="n">region</span>
+    <span class="k">FROM</span> <span class="n">regional_sales</span>
+    <span class="k">WHERE</span> <span class="n">total_sales</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="n">total_sales</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span> <span class="k">FROM</span> <span class="n">regional_sales</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">region</span><span class="p">,</span>
+       <span class="n">product</span><span class="p">,</span>
+       <span class="k">SUM</span><span class="p">(</span><span class="n">quantity</span><span class="p">)</span> <span class="k">AS</span> <span class="n">product_units</span><span class="p">,</span>
+       <span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="k">AS</span> <span class="n">product_sales</span>
+<span class="k">FROM</span> <span class="n">orders</span>
+<span class="k">WHERE</span> <span class="n">region</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">region</span> <span class="k">FROM</span> <span class="n">top_regions</span><span class="p">)</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">region</span><span class="p">,</span> <span class="n">product</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Can be written in two different ways, the first one using the <code class="docutils literal notranslate"><span class="pre">with()</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$regional_sales</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s2">&quot;SUM(amount)&quot;</span><span class="p">,</span> <span class="s1">&#39;total_sales&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="nv">$top_regions</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;product&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s2">&quot;total_sales &gt; (SELECT SUM(total_sales)/10 FROM regional_sales)&quot;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;regional_sales&#39;</span><span class="p">,</span> <span class="nv">$regional_sales</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">with</span><span class="p">(</span><span class="s1">&#39;top_regions&#39;</span><span class="p">,</span> <span class="nv">$top_regions</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;product&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s2">&quot;SUM(quantity)&quot;</span><span class="p">,</span> <span class="s1">&#39;product_units&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s2">&quot;SUM(amount)&quot;</span><span class="p">,</span> <span class="s1">&#39;product_sales&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s2">&quot;region IN (SELECT region FROM top_regions)&quot;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Or using the <code class="docutils literal notranslate"><span class="pre">createWith()</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">);</span>
+
+<span class="nv">$select</span>
+    <span class="o">-&gt;</span><span class="na">createWith</span><span class="p">(</span><span class="s1">&#39;regional_sales&#39;</span><span class="p">,</span> <span class="s1">&#39;orders&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s2">&quot;SUM(amount)&quot;</span><span class="p">,</span> <span class="s1">&#39;total_sales&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="nv">$select</span>
+    <span class="o">-&gt;</span><span class="na">createWith</span><span class="p">(</span><span class="s1">&#39;top_regions&#39;</span><span class="p">,</span> <span class="s1">&#39;orders&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;product&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s2">&quot;total_sales &gt; (SELECT SUM(total_sales)/10 FROM regional_sales)&quot;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="nv">$select</span>
+   <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;product&#39;</span><span class="p">])</span>
+   <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s2">&quot;SUM(quantity)&quot;</span><span class="p">,</span> <span class="s1">&#39;product_units&#39;</span><span class="p">)</span>
+   <span class="o">-&gt;</span><span class="na">columnExpression</span><span class="p">(</span><span class="s2">&quot;SUM(amount)&quot;</span><span class="p">,</span> <span class="s1">&#39;product_sales&#39;</span><span class="p">)</span>
+   <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s2">&quot;region IN (SELECT region FROM top_regions)&quot;</span><span class="p">)</span>
+   <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">)</span>
+   <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;product&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Once set, table expressions aliases can be used as any other normal table whenever
+the query builder exposes a <code class="docutils literal notranslate"><span class="pre">$relation</span></code> parameter, for every method without any
+exception.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../result.html" class="btn btn-neutral float-right" title="The result iterator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="where.html" class="btn btn-neutral float-left" title="WHERE (predicates)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

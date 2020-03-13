@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>WHERE (predicates) &mdash; Goat 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="WITH (Common Table Expressions)" href="with.html" />
+    <link rel="prev" title="DELETE" href="delete.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Goat
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/install.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../datatype.html">Datatypes and converter</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">The query builder</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../example.html">A basic example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="select.html">SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insert-values.html">INSERT .. VALUES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insert-query.html">INSERT .. SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html">UPDATE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delete.html">DELETE</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WHERE (predicates)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#where">WHERE .. = ..</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#where-not-in">WHERE .. [NOT] IN (..)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#where-not-in-select">WHERE .. [NOT] IN (SELECT ..)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#where-not-in-table-expression">WHERE .. [NOT] IN (&lt;TABLE EXPRESSION&gt;)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#where-arbitrary-expression">WHERE &lt;ARBITRARY EXPRESSION&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#or-and-with-the-where-object">OR / AND with the Where object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#or-and-chaining">OR / AND chaining</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="with.html">WITH (Common Table Expressions)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../result.html">The result iterator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Goat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">The query builder</a> &raquo;</li>
+        
+      <li>WHERE (predicates)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/query/impl/where.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="where-predicates">
+<span id="query-builder-where"></span><h1>WHERE (predicates)<a class="headerlink" href="#where-predicates" title="Permalink to this headline">¶</a></h1>
+<p>For all queries that supports it (<code class="docutils literal notranslate"><span class="pre">SELECT</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> and <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>) you can use
+the builder to express advanced and complex predicates.</p>
+<div class="section" id="where">
+<h2>WHERE .. = ..<a class="headerlink" href="#where" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">condition($column,</span> <span class="pre">$value,</span> <span class="pre">$operator)</span></code> method allows you to arbitrarily filter the
+SELECT query with any values:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span> <span class="k">WHERE</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">12</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">$value</span></code> parameter can be any PHP type that is supported by the converter, please
+<a class="reference internal" href="../../datatype.html#data-typing"><span class="std std-ref">see the datatype documentation</span></a>: <strong>This is always true for every</strong>
+<strong>kind of value parameter, in every method</strong>.</p>
+</div>
+<p>Example using the <code class="docutils literal notranslate"><span class="pre">$operator</span></code> argument:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;some_date&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(),</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span> <span class="k">WHERE</span> <span class="n">some_date</span> <span class="o">&lt;</span> <span class="s1">&#39;2018-02-16 15:48:54&#39;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$operator</span></code> value will be left untouched in the final SQL string, use it
+wisely: never allow user arbitrary values to reach this, it is opened to SQL
+injection.</p>
+</div>
+<p>Additionnaly, you can use a callback to set the conditions, simply provide any
+callable that takes a <code class="docutils literal notranslate"><span class="pre">Where</span></code> instance as its first argument, and set your
+conditions there:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nx">\Goat\Query\Where</span> <span class="nv">$where</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$where</span>
+            <span class="o">-&gt;</span><span class="na">isEqual</span><span class="p">(</span><span class="s1">&#39;some_table.id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">isGreaterOrEqual</span><span class="p">(</span><span class="s1">&#39;some_table.birthdate&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTimeImmutable</span><span class="p">(</span><span class="s1">&#39;2019-09-24&#39;</span><span class="p">))</span>
+            <span class="c1">// ...</span>
+        <span class="p">;</span>
+    <span class="p">})</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Which is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span>
+<span class="k">WHERE</span>
+    <span class="n">some_table</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="k">AND</span> <span class="n">some_table</span><span class="p">.</span><span class="n">birthdate</span> <span class="o">&gt;=</span> <span class="s1">&#39;2019-09-24&#39;</span>
+    <span class="c1">-- ...</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">condition()</span></code> with a single callable argument is strictly equivalent
+to calling <code class="docutils literal notranslate"><span class="pre">expression()</span></code> with a single callable argument.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In order to keep backward compatibility, and because values and expressions
+can be raw strings that may conflict with existing PHP function names,
+<strong>function names as strings cannot be used as callables</strong>.</p>
+</div>
+</div>
+<div class="section" id="where-not-in">
+<h2>WHERE .. [NOT] IN (..)<a class="headerlink" href="#where-not-in" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">..</span> <span class="pre">IN</span> <span class="pre">(..)</span></code> condition can be written using the <code class="docutils literal notranslate"><span class="pre">condition()</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span> <span class="k">WHERE</span> <span class="n">b</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You don’t have to manually set the <code class="docutils literal notranslate"><span class="pre">$operator</span></code> variable to <code class="docutils literal notranslate"><span class="pre">IN</span></code>, the query
+builder will do it for you.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">..</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">(..)</span></code> condition needs that you set the <code class="docutils literal notranslate"><span class="pre">$operator</span></code> parameter:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;NOT IN&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">NOT_IN</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Are both equivalent equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="n">t</span> <span class="k">WHERE</span> <span class="n">b</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You don’t have to manually set the <code class="docutils literal notranslate"><span class="pre">$operator</span></code> variable to <code class="docutils literal notranslate"><span class="pre">IN</span></code>, the query
+builder will do it for you.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can always mix up <code class="docutils literal notranslate"><span class="pre">Where::IN</span></code> with <code class="docutils literal notranslate"><span class="pre">Where::EQUAL</span></code> and <code class="docutils literal notranslate"><span class="pre">Where::NOT_IN</span></code>
+with <code class="docutils literal notranslate"><span class="pre">Where::NOT_EQUAL</span></code>, the query builder will dynamically attempt to fix
+it depending on the value type.</p>
+</div>
+</div>
+<div class="section" id="where-not-in-select">
+<h2>WHERE .. [NOT] IN (SELECT ..)<a class="headerlink" href="#where-not-in-select" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">..</span> <span class="pre">IN</span> <span class="pre">(SELECT</span> <span class="pre">..)</span></code> condition can be written using the <code class="docutils literal notranslate"><span class="pre">condition()</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$inSelect</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;other_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span>
+<span class="k">FROM</span> <span class="n">some_table</span>
+<span class="k">WHERE</span> <span class="n">b</span> <span class="k">IN</span> <span class="p">(</span>
+   <span class="k">SELECT</span> <span class="n">foo</span>
+   <span class="k">FROM</span> <span class="n">other_table</span>
+   <span class="k">WHERE</span> <span class="k">type</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">..</span> <span class="pre">NOT</span> <span class="pre">IN</span> <span class="pre">(SELECT</span> <span class="pre">..)</span></code> condition needs that you set the <code class="docutils literal notranslate"><span class="pre">$operator</span></code> parameter:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$inSelect</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;other_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="c1">// ...</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">,</span> <span class="s1">&#39;NOT IN&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">,</span> <span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">NOT_IN</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Are both equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span>
+<span class="k">FROM</span> <span class="n">some_table</span>
+<span class="k">WHERE</span> <span class="n">b</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span>
+   <span class="k">SELECT</span> <span class="n">foo</span>
+   <span class="k">FROM</span> <span class="n">other_table</span>
+   <span class="k">WHERE</span> <span class="k">type</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="where-not-in-table-expression">
+<h2>WHERE .. [NOT] IN (&lt;TABLE EXPRESSION&gt;)<a class="headerlink" href="#where-not-in-table-expression" title="Permalink to this headline">¶</a></h2>
+<p>This will come later once table expression will be implemented.</p>
+</div>
+<div class="section" id="where-arbitrary-expression">
+<h2>WHERE &lt;ARBITRARY EXPRESSION&gt;<a class="headerlink" href="#where-arbitrary-expression" title="Permalink to this headline">¶</a></h2>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">expression($statement,</span> <span class="pre">$arguments</span> <span class="pre">=</span> <span class="pre">[])</span></code> you can pass any SQL expresion
+in the <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Additionnaly, you can use a callback to set the expression, callback must return
+the expression:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
+    <span class="p">})</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>You may as well return any <code class="docutils literal notranslate"><span class="pre">Expression</span></code> instance, including <code class="docutils literal notranslate"><span class="pre">ExpressionColumn</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ExpressionValue</span></code> and so on:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">ExpressionRaw</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">);</span>
+    <span class="p">})</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">Where</span></code> instance given as the first callback argument,
+which is the main query where, in this case, you don’t need to return a value:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nx">\Goat\Query\Where</span> <span class="nv">$where</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$where</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">);</span>
+    <span class="p">})</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Are all equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">a</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="or-and-with-the-where-object">
+<h2>OR / AND with the Where object<a class="headerlink" href="#or-and-with-the-where-object" title="Permalink to this headline">¶</a></h2>
+<p>For most complex conditions, with <code class="docutils literal notranslate"><span class="pre">OR</span></code> and <code class="docutils literal notranslate"><span class="pre">AND</span></code> groups, you will need to fetch the
+<code class="docutils literal notranslate"><span class="pre">\Goat\Query\Where</span></code> component of the query:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+<span class="nv">$where</span> <span class="o">=</span> <span class="nv">$select</span><span class="o">-&gt;</span><span class="na">getWhere</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>You may now use the <code class="docutils literal notranslate"><span class="pre">\Goat\Query\Where</span></code> object to set advanced conditions.</p>
+</div>
+<div class="section" id="or-and-chaining">
+<h2>OR / AND chaining<a class="headerlink" href="#or-and-chaining" title="Permalink to this headline">¶</a></h2>
+<p>This method is not advised to use except in case where you attach a great importance to
+code readability: using <code class="docutils literal notranslate"><span class="pre">open()</span></code> and <code class="docutils literal notranslate"><span class="pre">close()</span></code> methods will allow you to change the
+current group you are in without breaking chaining.</p>
+<p>Let’s consider the following PHP code:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SelectQuery</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">);</span>
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">getWhere</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">open</span><span class="p">(</span><span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">OR</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;theWorld&#39;</span><span class="p">,</span> <span class="s1">&#39;enough&#39;</span><span class="p">,</span> <span class="s1">&#39;IS NOT&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;count(theWorld) = ?::int4&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="o">-&gt;</span><span class="na">open</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;1 = ?&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;2 * 2 = ?&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">close</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">close</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">and</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;beta&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">37</span><span class="p">,</span> <span class="mi">42</span><span class="p">],</span> <span class="nx">Where</span><span class="o">::</span><span class="na">BETWEEN</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">123</span><span class="p">,</span> <span class="mi">234</span><span class="p">],</span> <span class="nx">Where</span><span class="o">::</span><span class="na">NOT_BETWEEN</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">close</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">isNull</span><span class="p">(</span><span class="s1">&#39;roger&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">or</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;other&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;an array&#39;</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">close</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;baaaa&#39;</span><span class="p">,</span> <span class="s1">&#39;goat&#39;</span><span class="p">);</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">some_table</span>
+<span class="k">WHERE</span>
+   <span class="p">(</span>
+      <span class="n">theWorld</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="s1">&#39;enough&#39;</span>
+      <span class="k">OR</span> <span class="k">count</span><span class="p">(</span><span class="n">theWorld</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+      <span class="k">OR</span> <span class="p">(</span>
+         <span class="mi">1</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="k">AND</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">=</span> <span class="mi">5</span>
+      <span class="p">)</span>
+   <span class="p">)</span>
+   <span class="k">AND</span> <span class="p">(</span>
+      <span class="s1">&#39;beta&#39;</span> <span class="k">BETWEEN</span> <span class="mi">37</span> <span class="k">AND</span> <span class="mi">42</span>
+      <span class="k">AND</span> <span class="n">gamma</span> <span class="k">NOT</span> <span class="k">BETWEEN</span> <span class="mi">123</span> <span class="k">AND</span> <span class="mi">234</span>
+   <span class="p">)</span>
+   <span class="k">AND</span> <span class="n">roger</span> <span class="k">IS</span> <span class="k">NULL</span>
+   <span class="k">AND</span> <span class="p">(</span>
+      <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
+      <span class="k">OR</span> <span class="n">other</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;an array&#39;</span><span class="p">)</span>
+   <span class="p">)</span>
+   <span class="k">AND</span> <span class="n">baaaa</span> <span class="o">=</span> <span class="s1">&#39;goat&#39;</span>
+</pre></div>
+</div>
+<p>In this case:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-&gt;open()</span></code> and <code class="docutils literal notranslate"><span class="pre">-&gt;and()</span></code> are equivalent.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-&gt;open(\Goat\Query\Where::OR)</span></code> and <code class="docutils literal notranslate"><span class="pre">-&gt;or()</span></code> are equivalent.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="with.html" class="btn btn-neutral float-right" title="WITH (Common Table Expressions)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="delete.html" class="btn btn-neutral float-left" title="DELETE" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

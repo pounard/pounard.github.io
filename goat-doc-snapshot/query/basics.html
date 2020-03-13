@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Concepts &mdash; Goat 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A basic example" href="example.html" />
+    <link rel="prev" title="The query builder" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Goat
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/install.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datatype.html">Datatypes and converter</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The query builder</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#query-creation">Query creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generated-sql">Generated SQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identifiers-and-arbitrary-expressions">Identifiers and arbitrary expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#available-expressions">Available expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#expressionraw">ExpressionRaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expressioncolumn">ExpressionColumn</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expressionrelation">ExpressionRelation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expressionvalue">ExpressionValue</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution-modes">Execution modes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameters-placeholders">Parameters placeholders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execute-options">Execute options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A basic example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/select.html">SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/insert-values.html">INSERT .. VALUES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/insert-query.html">INSERT .. SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/update.html">UPDATE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/delete.html">DELETE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/where.html">WHERE (predicates)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impl/with.html">WITH (Common Table Expressions)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../result.html">The result iterator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Goat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">The query builder</a> &raquo;</li>
+        
+      <li>Concepts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/query/basics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="concepts">
+<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="query-creation">
+<h2>Query creation<a class="headerlink" href="#query-creation" title="Permalink to this headline">¶</a></h2>
+<p>A query created from its runner:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+   <span class="sd">/** @var \Goat\Runner\Runner $runner */</span>
+
+   <span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="nv">$relation</span><span class="p">,</span> <span class="nv">$alias</span><span class="p">);</span>
+
+   <span class="nv">$update</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$relation</span><span class="p">,</span> <span class="nv">$alias</span><span class="p">);</span>
+
+   <span class="nv">$insertValues</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">insertValues</span><span class="p">(</span><span class="nv">$relation</span><span class="p">);</span>
+
+   <span class="nv">$insertQuery</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">insertQuery</span><span class="p">(</span><span class="nv">$relation</span><span class="p">);</span>
+
+   <span class="nv">$delete</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$relation</span><span class="p">,</span> <span class="nv">$alias</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generated-sql">
+<h2>Generated SQL<a class="headerlink" href="#generated-sql" title="Permalink to this headline">¶</a></h2>
+<p><strong>Generated SQL is SQL-92 standard compliant per default</strong>, along with a few
+variations from SQL 1996, 1999, 2003, 2006, 2008, 2011 when implemented. For SQL
+servers that don’t play well with SQL standard, drivers will fix the SQL query
+formatting accordingly by themselves.</p>
+<p>Depending on the database server, some constructs might not work (for example MySQL
+does not support WITH or RETURNING statements): in most cases, it will fail while
+during query execution in tyhe RDBMS side.</p>
+</div>
+<div class="section" id="identifiers-and-arbitrary-expressions">
+<h2>Identifiers and arbitrary expressions<a class="headerlink" href="#identifiers-and-arbitrary-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Relation and column references are not validated during query building: you can always
+write arbitrary identifiers, they will be left untouched within the generated SQL.</p>
+<p><strong>Each identifier, value, predicate, relation, … any method parameter can be replaced</strong>
+<strong>by ``GoatQueryExpression`` instances: those objects will be considered as raw SQL</strong>
+<strong>and place as-is without any escaping within the SQL queries.</strong></p>
+<p>This explicitely allow you to go beyond the query builder capabilities and write
+custom or specific arbitrary SQL.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Never allow arbitrary user values to pass down as ExpressionRaw SQL string</strong>:
+since they are not properly escaped, they represent a security risk.</p>
+<p><strong>Keep them for edge cases the builder can’t do</strong>.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ExpressionRaw</span></code> object allows you to pass arbitrary parameters that must
+refer to <a class="reference internal" href="#query-parameter-placeholder"><span class="std std-ref">parameters placehoders</span></a> within
+the expression arbitrary SQL string, example usage on a select query adding
+an arbitrary raw expression to the where clause:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="c1">// WHERE COUNT(comment) &gt; 5</span>
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;COUNT(comment) &gt; ?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>Parameter placeholders will be gracefully merged to the others in their
+rightful respective order at execute time.</p>
+</div>
+<div class="section" id="available-expressions">
+<h2>Available expressions<a class="headerlink" href="#available-expressions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="expressionraw">
+<h3>ExpressionRaw<a class="headerlink" href="#expressionraw" title="Permalink to this headline">¶</a></h3>
+<p>This expression allows to write arbitrary unvalidated SQL.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="c1">// Create a raw expression</span>
+<span class="nx">\Goat\Query\ExpressionRaw</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;count(*)&#39;</span><span class="p">);</span>
+
+<span class="c1">// Create a raw expression with arguments</span>
+<span class="nx">\Goat\Query\ExpressionRaw</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;sum(foo.column1) = ?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">12</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expressioncolumn">
+<h3>ExpressionColumn<a class="headerlink" href="#expressioncolumn" title="Permalink to this headline">¶</a></h3>
+<p>This expression allows you to identify a column, which will be properly escaped
+in the generated SQL.</p>
+<p><strong>Simple example</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionColumn</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;some_column&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;some_column&quot;</span>
+</pre></div>
+</div>
+<p><strong>With a table alias (implicit)</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionColumn</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;some_column.some_table&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;some_table&quot;</span><span class="p">.</span><span class="ss">&quot;some_column&quot;</span>
+</pre></div>
+</div>
+<p><strong>With a table alias (explicit)</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionColumn</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;some_column&#39;</span><span class="p">,</span> <span class="s1">&#39;some_table&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;some_table&quot;</span><span class="p">.</span><span class="ss">&quot;some_column&quot;</span>
+</pre></div>
+</div>
+<p><strong>If you need to escape dot</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionColumn</span><span class="o">::</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;some.column&#39;</span><span class="p">,</span> <span class="s1">&#39;some.table&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;some.table&quot;</span><span class="p">.</span><span class="ss">&quot;some.column&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expressionrelation">
+<h3>ExpressionRelation<a class="headerlink" href="#expressionrelation" title="Permalink to this headline">¶</a></h3>
+<p>This expression allows you to identify a table, relation, constant table with
+alias, WITH statement.</p>
+<p><strong>Simple example</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionRelation</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;some.table&quot;</span>
+</pre></div>
+</div>
+<p><strong>With a table alias</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionRelation</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;some.table&quot;</span> <span class="k">as</span> <span class="ss">&quot;foo&quot;</span>
+</pre></div>
+</div>
+<p><strong>With a schema (implicit)</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionRelation</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;my_schema.some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;my_schema&quot;</span><span class="p">.</span><span class="ss">&quot;some_table&quot;</span> <span class="k">as</span> <span class="ss">&quot;foo&quot;</span>
+</pre></div>
+</div>
+<p><strong>With a schema (explicit)</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionRelation</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;my_schema&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;my_schema&quot;</span><span class="p">.</span><span class="ss">&quot;some_table&quot;</span> <span class="k">as</span> <span class="ss">&quot;foo&quot;</span>
+</pre></div>
+</div>
+<p><strong>If you need to escape dot</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionRelation</span><span class="o">::</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;some.table&#39;</span><span class="p">,</span> <span class="s1">&#39;some.alias&#39;</span><span class="p">,</span> <span class="s1">&#39;my.schema&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="ss">&quot;my.schema&quot;</span><span class="p">.</span><span class="ss">&quot;some.table&quot;</span> <span class="k">as</span> <span class="ss">&quot;foo&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expressionvalue">
+<h3>ExpressionValue<a class="headerlink" href="#expressionvalue" title="Permalink to this headline">¶</a></h3>
+<p>Represents a raw value. <strong>You will need this when the converter is unable</strong>
+<strong>to find the appropriate type to convert to</strong>, for example when you need
+to store <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> or a PostgreSQL array.</p>
+<p>It will pass the type cast whenever necessary in queries, allowing the
+converter to deambiguate values types.</p>
+<p><strong>Simple exemple</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionValue</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will be formatted as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">?</span>
+</pre></div>
+</div>
+<p><strong>With a type</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionValue</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">?</span><span class="p">::</span><span class="nb">int</span>
+</pre></div>
+</div>
+<p><strong>JSON</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionValue</span><span class="o">::</span><span class="na">create</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="s1">&#39;json&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">?</span><span class="p">::</span><span class="n">json</span>
+</pre></div>
+</div>
+<p><strong>PostgreSQL array</strong>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nx">\Goat\Query\ExpressionValue</span><span class="o">::</span><span class="na">create</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;int[]&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="o">?</span><span class="p">::</span><span class="nb">int</span><span class="p">[]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Examples here do not show how the value will be converted, refer to the
+converter documentation for this.</p>
+</div>
+</div>
+</div>
+<div class="section" id="execution-modes">
+<h2>Execution modes<a class="headerlink" href="#execution-modes" title="Permalink to this headline">¶</a></h2>
+<p>There are two different execution method: <code class="docutils literal notranslate"><span class="pre">execute()</span></code> and <code class="docutils literal notranslate"><span class="pre">perform()</span></code>: <code class="docutils literal notranslate"><span class="pre">execute</span></code>
+will return a result iterator which will hydrate rows form the database whereas
+<code class="docutils literal notranslate"><span class="pre">perform</span></code> will drop any result and return the affected row count.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">perform</span></code> will have a different execution path which leads drivers supporting it
+to a huge performance boost: result will not be buffered and sent back to PHP.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">execute</span></code> <strong>will fallback automatically on</strong> <code class="docutils literal notranslate"><span class="pre">perform</span></code> <strong>implementation if the</strong>
+<strong>SQL query being executed cannot return rows</strong>: INSERT, UPDATE and DELETE queries
+without a RETURNING clause.</p>
+</div>
+<p><strong>Using perform() whenever applyable ensures best performances</strong>.</p>
+</div>
+<div class="section" id="parameters-placeholders">
+<span id="query-parameter-placeholder"></span><h2>Parameters placeholders<a class="headerlink" href="#parameters-placeholders" title="Permalink to this headline">¶</a></h2>
+<p>Independently from the final database driver, all parameters within arbitrary SQL
+must be <code class="docutils literal notranslate"><span class="pre">?</span></code>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span>
+    <span class="s2">&quot;SELECT * FROM user WHERE mail = ?&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">&#39;john.smith@example.com&#39;</span><span class="p">],</span>
+    <span class="nx">\App\Entity\User</span><span class="o">::</span><span class="na">class</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Additionnaly in order to ensure correct value conversion and achieve best performances
+during SQL query formatting, you can specify the data type using <code class="docutils literal notranslate"><span class="pre">?::TYPE</span></code>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span>
+    <span class="s2">&quot;SELECT * FROM user WHERE last_login &gt; ?::timestamp&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s2">&quot;today 00:00:01&quot;</span><span class="p">)],</span>
+    <span class="nx">\App\Entity\User</span><span class="o">::</span><span class="na">class</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../datatype.html#data-typing"><span class="std std-ref">data types matrix</span></a> for available types.</p>
+<p>You can specify any number of parameter placeholders within the query, parameters
+array must be ordered:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span>
+    <span class="s2">&quot;SELECT * FROM user WHERE last_login &gt; ?::timestamp AND mail = ?&quot;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s2">&quot;today 00:00:01&quot;</span><span class="p">),</span>
+        <span class="s1">&#39;john.smith@example.com&#39;</span>
+    <span class="p">],</span>
+    <span class="nx">\App\Entity\User</span><span class="o">::</span><span class="na">class</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="execute-options">
+<h2>Execute options<a class="headerlink" href="#execute-options" title="Permalink to this headline">¶</a></h2>
+<p>Both <code class="docutils literal notranslate"><span class="pre">execute</span></code> and <code class="docutils literal notranslate"><span class="pre">perform</span></code> have the same input signature:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>on runner instances: <code class="docutils literal notranslate"><span class="pre">execute(string|Statement</span> <span class="pre">$query,</span> <span class="pre">array</span> <span class="pre">$parameters</span> <span class="pre">=</span> <span class="pre">[],</span> <span class="pre">null|string|array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></li>
+<li><p>on query instances: <code class="docutils literal notranslate"><span class="pre">execute(array</span> <span class="pre">$parameters</span> <span class="pre">=</span> <span class="pre">[],</span> <span class="pre">null|string|array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">$parameters</span></code> is an ordered array of values to pass along the query. Using the
+query builder you will not need it in most cases: arbitrary parameters values should
+be passed to query builder methods. Nevertheless, in some edge cases, you might want
+to pass <a class="reference internal" href="#query-parameter-placeholder"><span class="std std-ref">parameters placehoders</span></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">$options</span></code> is a set of key-value pairs that may contain:</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">class</span></code> (string): PHP class name for hydrating rows, see
+<a class="reference internal" href="../hydrator/index.html#hydrator"><span class="std std-ref">hydration documentation</span></a>:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$select</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">([],</span> <span class="p">[</span><span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Entity\Task</span><span class="o">::</span><span class="na">class</span><span class="p">]);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As a convenience, if you don’t have any specific options to pass to query, you
+can directly pass the class name string instead of an option array:</p>
+<blockquote>
+<div><div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$select</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">([],</span> <span class="nx">\App\Entity\Task</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Options can also be set on the query itself using the <code class="docutils literal notranslate"><span class="pre">setOption()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">setOptions()</span></code> methods:</p>
+<blockquote>
+<div><div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">setOptions</span><span class="p">([</span><span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Entity\Task</span><span class="o">::</span><span class="na">class</span><span class="p">]);</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$select</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span>
+
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">setOption</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="nx">\App\Entity\Task</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$select</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="example.html" class="btn btn-neutral float-right" title="A basic example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="The query builder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

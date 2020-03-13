@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Goat &mdash; Goat 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="install/install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Goat
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datatype.html">Datatypes and converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="query/index.html">The query builder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="result.html">The result iterator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Goat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Goat</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="goat">
+<h1>Goat<a class="headerlink" href="#goat" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/install.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#standalone-setup">Standalone setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html#symfony-setup">Symfony setup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datatype.html">Datatypes and converter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datatype.html#supported-data-types">Supported data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatype.html#postgresql-arrays">PostgreSQL arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatype.html#explicit-type-cast">Explicit type cast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datatype.html#explicit-result-casting">Explicit result casting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="query/index.html">The query builder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="query/basics.html">Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/example.html">A basic example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/select.html">SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/insert-values.html">INSERT .. VALUES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/insert-query.html">INSERT .. SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/update.html">UPDATE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/delete.html">DELETE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/where.html">WHERE (predicates)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query/impl/with.html">WITH (Common Table Expressions)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="result.html">The result iterator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="result.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="result.html#fetching-data">Fetching data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="result.html#hydrating-rows">Hydrating rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="result.html#result-type-casting">Result type casting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hydrator/index.html">Object hydration</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Goat is an SQL toolbox built around a powerful SQL query builder.</p>
+<p>It covers the following basic needs:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>it provides a <strong>database driver connector abstraction</strong>, as of now supporting
+<strong>MySQL 5x</strong>, <strong>PostgreSQL 9.x and 10.x</strong>,</p></li>
+<li><p>it provides a <strong>complete and easy-to-use query builder</strong>,</p></li>
+<li><p><strong>it converts selected data to PHP native types using typing information</strong>
+<strong>from the database</strong> and allows you to extend this convertion mechanism,</p></li>
+<li><p>it <strong>hydrates database row on arbitrary user given classes</strong>, and allows
+<strong>hierarchical hydration</strong> (nesting objects),</p></li>
+<li><p>it provides a very basic ORM-like data mapping layer, along with basic
+CRUD functionality.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>More generally, this connector was built for speed and efficient object</strong>
+<strong>hydration with a strong emphasis on correct data typing.</strong></p>
+</div>
+<div class="section" id="principle">
+<h2>Principle<a class="headerlink" href="#principle" title="Permalink to this headline">¶</a></h2>
+<p>It aims to cover the same areas as most ORM will do, with a different
+software design and approach:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>TL;DR: if you love your ORM, don’t use Goat.</strong></p></li>
+<li><p>you shall not map relations onto objects: objects are a mutable data
+representation in memory while relations are a mathematical concept,
+both do not play well together;</p></li>
+<li><p>selecting data is projecting a unique and restricted set of data at a
+specific point in time: selected data is not the truth, it’s only a
+representation of it;</p></li>
+<li><p>selected data should always remain immutable, you need it for viewing or
+displaying purpose; since it only represents a degraded, altered
+projection of your data at a specific point in time, you should never
+modify it; as soon as you did selected data, someone else probably already
+modified it!</p></li>
+<li><p>selected data will always be typed, never cast strings ever again! Your
+database knows better than you the data types it carries, why not trust it
+and let you enjoy what the database really gives to you?</p></li>
+<li><p>data alteration (insertion, update, merge and deletion) can not happen using
+entity objects, you can not alter something that’s already outdated;</p></li>
+<li><p>everyone needs a query builder; but everyone needs to be able to write real
+SQL queries too; nothing will prevent you from customazing your SQL.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="what-it-doesn-t-do-but-might-someday">
+<h2>What it doesn’t do (but might someday)<a class="headerlink" href="#what-it-doesn-t-do-but-might-someday" title="Permalink to this headline">¶</a></h2>
+<p>This connector does not provide:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a schema API, for manipulating the database schema, we believe that
+developers should always write manually their schema according to the
+database features they will use.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="current-driver-support">
+<h2>Current driver support<a class="headerlink" href="#current-driver-support" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>MySQL 5.7</strong> via <strong>PDO</strong>,</p></li>
+<li><p><strong>PostgreSQL &gt;= 9.5</strong> via <strong>PDO</strong>.</p></li>
+<li><p><strong>PostgreSQL &gt;= 9.5</strong> via <strong>ext-pgsql</strong>.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="why-the-name">
+<h2>Why the name?<a class="headerlink" href="#why-the-name" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because you probably are as stupid as a goat to write a new database
+connector from scratch!</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install/install.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
