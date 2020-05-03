@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The result iterator &mdash; Goat 1.0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Object hydration" href="hydrator/index.html" />
+    <link rel="prev" title="WITH (Common Table Expressions)" href="query/impl/with.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Goat
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install/install.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datatype.html">Datatypes and converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="query/index.html">The query builder</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The result iterator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fetching-data">Fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fetch">fetch()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetchfield">fetchField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetchcolumn">fetchColumn()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hydrating-rows">Hydrating rows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-a-custom-hydrator">Using a custom hydrator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-a-callback">Using a callback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#result-type-casting">Result type casting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Goat</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>The result iterator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/result.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-result-iterator">
+<span id="result-iterator"></span><h1>The result iterator<a class="headerlink" href="#the-result-iterator" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Result iterator is an iterator of values, values can be either:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>an array whose keys are column aliases or names</strong>, values are hydrated and
+converted values from the database,</p></li>
+<li><p><strong>an hydrated class instance</strong> if the <code class="docutils literal notranslate"><span class="pre">class</span></code> option was provided to the
+query options.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>One very important fact to know: <strong>a result can always be iterated only once</strong>,
+results are never kept into memory for performance reasons.</p>
+</div>
+<p>If you need to iterate more than once over it, fetch the result as an array:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">);</span>
+
+<span class="nv">$array</span> <span class="o">=</span> <span class="nx">\iterator_to_array</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>But it also a value object that carries some metadata, such as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>column names,</p></li>
+<li><p>column types,</p></li>
+<li><p>row count.</p></li>
+</ul>
+</div></blockquote>
+<p>Every value the SQL server will send back to you will be automatically converted
+to PHP native types using the converter. See the <a class="reference internal" href="datatype.html#data-typing"><span class="std std-ref">data types matrix</span></a>.</p>
+</div>
+<div class="section" id="fetching-data">
+<h2>Fetching data<a class="headerlink" href="#fetching-data" title="Permalink to this headline">¶</a></h2>
+<p>For this section, we will assume that the current return is this table:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>“a”</p></th>
+<th class="head"><p>“b”</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>‘foo’</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>‘bar’</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>‘baz’</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="fetch">
+<h3>fetch()<a class="headerlink" href="#fetch" title="Permalink to this headline">¶</a></h3>
+<p>Fetches the next row and advance in stream.</p>
+<p>Return value is the next row of values, ie:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">);</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Will give you:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 61%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>“a”</p></th>
+<th class="head"><p>“b”</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'foo'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>‘bar’</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>‘baz’</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fetchfield">
+<h3>fetchField()<a class="headerlink" href="#fetchfield" title="Permalink to this headline">¶</a></h3>
+<p>Fetches the next row and return a single column.</p>
+<p>If you don’t specify any parameter, it will return the first column from the
+result. Example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">);</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Will give you:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>“a”</p></th>
+<th class="head"><p>“b”</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>‘foo’</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>‘bar’</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>‘baz’</p></td>
+</tr>
+</tbody>
+</table>
+<p>You can specify either the column number (numbering starts with <code class="docutils literal notranslate"><span class="pre">0</span></code>) or name:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">);</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will give you:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 69%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>“a”</p></th>
+<th class="head"><p>“b”</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'foo'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>‘bar’</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>‘baz’</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fetchcolumn">
+<h3>fetchColumn()<a class="headerlink" href="#fetchcolumn" title="Permalink to this headline">¶</a></h3>
+<p>Fetches a single column from all the rows.</p>
+<p>If you don’t specify any parameter, it will return the first column from the
+result. Example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">);</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetchColumn</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Will give you:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>“a”</p></th>
+<th class="head"><p>“b”</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>‘foo’</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>‘bar’</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+<td><p>‘baz’</p></td>
+</tr>
+</tbody>
+</table>
+<p>You can specify either the column number (numbering starts with <code class="docutils literal notranslate"><span class="pre">0</span></code>) or name:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">);</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetchColumn</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Or</span>
+
+<span class="nv">$result</span><span class="o">-&gt;</span><span class="na">fetchColumn</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Will give you:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 69%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>“a”</p></th>
+<th class="head"><p>“b”</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'foo'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'bar'</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'baz'</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hydrating-rows">
+<span id="result-iterator-cast"></span><h2>Hydrating rows<a class="headerlink" href="#hydrating-rows" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-a-custom-hydrator">
+<h3>Using a custom hydrator<a class="headerlink" href="#using-a-custom-hydrator" title="Permalink to this headline">¶</a></h3>
+<p>&#64;todo</p>
+</div>
+<div class="section" id="using-a-callback">
+<h3>Using a callback<a class="headerlink" href="#using-a-callback" title="Permalink to this headline">¶</a></h3>
+<p>Instead of using an <code class="docutils literal notranslate"><span class="pre">HydratorInterface</span></code> instance, you may arbitrarily use any
+callable for hydrating rows, callable signature must be:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">function</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$row</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">$row</span></code> is raw row fetched from database whose values have been converted
+using the <code class="docutils literal notranslate"><span class="pre">Converter</span></code> component.</p>
+<p>You can specify the hydrator within the <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s2">&quot;SELECT ...&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span>
+    <span class="s1">&#39;hydrator&#39;</span> <span class="o">=&gt;</span> <span class="k">function</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">SomeObject</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
+    <span class="p">},</span>
+<span class="p">]);</span>
+</pre></div>
+</div>
+<p>Which is equivalent to:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="c1">// ... build your query</span>
+    <span class="o">-&gt;</span><span class="na">setOption</span><span class="p">(</span><span class="s1">&#39;hydrator&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">SomeObject</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+<p>But you also may directly call <code class="docutils literal notranslate"><span class="pre">ResultIteratorInterface::setHydrator()</span></code> this way:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$runner</span>
+    <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
+    <span class="c1">// ... build your query</span>
+    <span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">setHydrator</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">SomeObject</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
+    <span class="p">})</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="result-type-casting">
+<h2>Result type casting<a class="headerlink" href="#result-type-casting" title="Permalink to this headline">¶</a></h2>
+<p>&#64;todo</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hydrator/index.html" class="btn btn-neutral float-right" title="Object hydration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="query/impl/with.html" class="btn btn-neutral float-left" title="WITH (Common Table Expressions)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
