@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Goat Mapper &mdash; Goat Mapper 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation and configuration" href="install/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Goat Mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/index.html">Installation and configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/index.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Goat Mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Goat Mapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="goat-mapper">
+<h1>Goat Mapper<a class="headerlink" href="#goat-mapper" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/index.html">Installation and configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/install.html">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/cache.html">Tuning cache</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/index.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/entity.html">Define entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/query.html">Querying and loading your data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/tutorials/index.html">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hydrator/index.html">Object hydration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hydrator/custom.html">Create a custom hydrator</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Goat mapper is an SQL to PHP entity mapper, supporting complex object relations.</p>
+<p>This is not a full-fledged ORM, even though it does look like it. Note that the main
+difference between existing ORMs and this tool is that this tool is read-only.
+Yes, you read it right, it is READ-ONLY, and it is by design.</p>
+<p>It’s build on top of:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">makinacorpus/goat-query</span></code> − <a class="reference external" href="https://github.com/pounard/goat-query">https://github.com/pounard/goat-query</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ocramius/generated-hydrator</span></code> − <a class="reference external" href="https://github.com/Ocramius/GeneratedHydrator">https://github.com/Ocramius/GeneratedHydrator</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ocramius/proxy-manager</span></code> − <a class="reference external" href="https://github.com/Ocramius/ProxyManager">https://github.com/Ocramius/ProxyManager</a></p></li>
+</ul>
+</div></blockquote>
+<p>Let’s be honest, <strong>this is an experimental project</strong>, if you need an ORM, use
+a mature and community-driven one such as Doctrine. This component as of now is
+not meant be as powerful or complete than the many already existing mature
+solutions.</p>
+</div>
+<div class="section" id="use-case-and-desing-approach">
+<h2>Use case and desing approach<a class="headerlink" href="#use-case-and-desing-approach" title="Permalink to this headline">¶</a></h2>
+<p>It is meant to be used in a Domain Driven Development approach, it delegates
+writes to you. Writes shoud be implemented as dedicated methods with semantic
+meaning. This tool does not hide your SQL, it just help you read and hydrate
+your data more efficiently according to your SQL schema.</p>
+<p>We consider that writing data will remain related to your domain, and cannot
+be written in a generic manner without creating new problems mostly related
+to data access concurency and transactions. Where most ORM fail is when you
+need to fine tune your transactions, and we don’t have the pretention to
+solve that problem without knowing your schema and domain business in
+advance.</p>
+</div>
+<div class="section" id="concepts-and-software-design">
+<h2>Concepts and software design<a class="headerlink" href="#concepts-and-software-design" title="Permalink to this headline">¶</a></h2>
+<p>Basically, it maps your SQL tables into objects using an internal and
+intermediate entity-relationship graph-based represendation, and write
+complex SQL queries traversing this graph to load your objects.</p>
+<p>It implement a few solutions for the famous N+1 problem:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>eager loading for any to one relationships, using <code class="docutils literal notranslate"><span class="pre">JOIN</span></code>, able to
+<code class="docutils literal notranslate"><span class="pre">JOIN</span></code> indefinitely (meaning you can fetch A -&gt; B -&gt; C …) in a
+single SQL query,</p></li>
+<li><p>lazy loading of collections (not so N+1 solving) but yet nice to use
+for end users,</p></li>
+<li><p>bulk lazy load collections over an entity result set that cannot be
+naturally <code class="docutils literal notranslate"><span class="pre">JOIN</span></code>’ed using an additional SQL query for each relation,</p></li>
+<li><p>hydrates everything efficiently using <code class="docutils literal notranslate"><span class="pre">ocramius/generated-hydrator</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Now you that know everything, you may start using it if you wishes to.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install/index.html" class="btn btn-neutral float-right" title="Installation and configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

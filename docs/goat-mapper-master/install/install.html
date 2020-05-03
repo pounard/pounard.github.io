@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting started &mdash; Goat Mapper 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tuning cache" href="cache.html" />
+    <link rel="prev" title="Installation and configuration" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Goat Mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Installation and configuration</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#symfony-setup">Symfony setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bundle-setup-and-configuration">Bundle setup and configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services-usage">Services usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-a-custom-repository">Register a custom repository</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#standalone-setup">Standalone setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-a-database-connection">Setup a database connection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-the-definition-registry">Setup the definition registry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#static-entity-definition-registry">Static entity definition registry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-php-cache-definition-registry">Using PHP cache definition registry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-the-entity-hydrator">Setup the entity hydrator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-repository-registry-optional">Setup repository registry (optional)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-the-entity-manager">Setup the entity manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inject-entity-manager-dependency">Inject entity manager dependency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wrapping-it-up">Wrapping it up</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html">Tuning cache</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/index.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Goat Mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Installation and configuration</a> &raquo;</li>
+        
+      <li>Getting started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/install/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<span id="install"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer require makinacorpus/goat-query ^2
+composer require makinacorpus/goat-mapper
+</pre></div>
+</div>
+</div>
+<div class="section" id="symfony-setup">
+<h2>Symfony setup<a class="headerlink" href="#symfony-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bundle-setup-and-configuration">
+<h3>Bundle setup and configuration<a class="headerlink" href="#bundle-setup-and-configuration" title="Permalink to this headline">¶</a></h3>
+<p>&#64;todo</p>
+</div>
+<div class="section" id="services-usage">
+<h3>Services usage<a class="headerlink" href="#services-usage" title="Permalink to this headline">¶</a></h3>
+<p>&#64;todo</p>
+</div>
+<div class="section" id="register-a-custom-repository">
+<h3>Register a custom repository<a class="headerlink" href="#register-a-custom-repository" title="Permalink to this headline">¶</a></h3>
+<p>&#64;todo</p>
+</div>
+</div>
+<div class="section" id="standalone-setup">
+<h2>Standalone setup<a class="headerlink" href="#standalone-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setup-a-database-connection">
+<h3>Setup a database connection<a class="headerlink" href="#setup-a-database-connection" title="Permalink to this headline">¶</a></h3>
+<p>You need to create a database connection to use this library. It explicitely
+uses <code class="docutils literal notranslate"><span class="pre">makinacorpus/goat-query</span></code> for writing SQL.</p>
+<p>A very easy setup would be something such as:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Driver\Configuration</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Driver\ExtPgSQLDriver</span><span class="p">;</span>
+
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ExtPgSQLDriver</span><span class="p">();</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setConfiguration</span><span class="p">(</span>
+    <span class="nx">Configuration</span><span class="o">::</span><span class="na">fromString</span><span class="p">(</span>
+        <span class="s2">&quot;pgsql://user:password@hostname:port/database&quot;</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+<span class="nv">$runner</span> <span class="o">=</span> <span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Additionnaly, you may re-use an existing PDO connection as such:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Driver\DriverFactory</span><span class="p">;</span>
+
+<span class="nv">$runner</span> <span class="o">=</span> <span class="nx">DriverFactory</span><span class="o">::</span><span class="na">fromPDOConnection</span><span class="p">(</span><span class="nv">$pdo</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Or using an existing Doctrine DBAL connection:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Driver\DriverFactory</span><span class="p">;</span>
+
+<span class="nv">$runner</span> <span class="o">=</span> <span class="nx">DriverFactory</span><span class="o">::</span><span class="na">fromDoctrineConnection</span><span class="p">(</span><span class="nv">$connection</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Of course, it is strongly advised that you read its documentation for using
+it correctly.</p>
+</div>
+<div class="section" id="setup-the-definition-registry">
+<h3>Setup the definition registry<a class="headerlink" href="#setup-the-definition-registry" title="Permalink to this headline">¶</a></h3>
+<p>Definition registry is the component that does lookup for entity metadata
+and build the entity graph that will be traversed in order to build SQL
+queries.</p>
+<p>Multiple implementations are provided, we will document them in order of
+ease of use.</p>
+<p>We will consider that in all cases, you want this process to be cached,
+at least in memory, so start by creating the cache decorator and definition
+chain implementations:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\CacheDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\ChainDefinitionRegistry</span><span class="p">;</span>
+
+<span class="nv">$chainDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nv">$definitionRegistry</span><span class="p">();</span>
+<span class="nv">$definitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CacheDefinitionRegistry</span><span class="p">(</span><span class="nv">$chainDefinitionRegistry</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Starting from there, you are ready to choose your definition registry concrete
+implementation.</p>
+<p>After this step, you can proceed with defining entities, or continue this section
+to see other entity definition options.</p>
+<p>When you will have setup it fully, you will be able to fetch entity definitions
+using:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$entity</span> <span class="o">=</span> <span class="nv">$definitionRegistry</span><span class="o">-&gt;</span><span class="na">getDefinition</span><span class="p">(</span><span class="nx">\Vendor\App\Entity\Foo</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now proceed to next chapters in order to setup a concrete implementation.</p>
+</div>
+<div class="section" id="static-entity-definition-registry">
+<h3>Static entity definition registry<a class="headerlink" href="#static-entity-definition-registry" title="Permalink to this headline">¶</a></h3>
+<p>Static entity definition registry is the easiest to use, but it requires
+you to implement the <code class="docutils literal notranslate"><span class="pre">Goat\Mapper\Definition\Registry\StaticEntityDefinition</span></code>
+interface on all your entity classes.</p>
+<p>This interface provides a single static method that will take a single parameter
+which a builder instance, implementing the builder pattern with naturally named
+methods, easy to use:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">interface</span> <span class="nx">StaticEntityDefinition</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Define entity using the given builder.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">defineEntity</span><span class="p">(</span><span class="nx">DefinitionBuilder</span> <span class="nv">$builder</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>&#64;todo link to definition builder documentation</p>
+<p>In order to setup the definition registry, let’s proceed continuing the
+code we started above:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\StaticEntityDefinitionRegistry</span><span class="p">;</span>
+
+<span class="c1">// Code from above is here...</span>
+
+<span class="nv">$staticDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StaticEntityDefinitionRegistry</span><span class="p">();</span>
+
+<span class="c1">// Static definition registry will extensively use the proxy pattern in order</span>
+<span class="c1">// to lazy load entity definitions while browsing the entity graph, so it needs</span>
+<span class="c1">// a reference to the facade definition registry (i.e. the one doing caching):</span>
+<span class="nv">$staticDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">setParentDefinitionRegistry</span><span class="p">(</span><span class="nv">$definitionRegistry</span><span class="p">);</span>
+
+<span class="c1">// Add it to our chain.</span>
+<span class="nv">$chainDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$staticDefinitionRegistry</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-php-cache-definition-registry">
+<h3>Using PHP cache definition registry<a class="headerlink" href="#using-php-cache-definition-registry" title="Permalink to this headline">¶</a></h3>
+<p>PHP cache is an extra caching layer for your entity definitions that generates
+the definitions into PHP functions, dumped into PHP files in cache, which are
+way faster than other way of defining entities.</p>
+<p>In order to use it, you must adapt the initial code:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Cache\Definition\Registry\PhpDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\CacheDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\ChainDefinitionRegistry</span><span class="p">;</span>
+
+<span class="nv">$chainDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ChainDefinitionRegistry</span><span class="p">();</span>
+<span class="nv">$phpDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PhpDefinitionRegistry</span><span class="p">(</span><span class="nv">$chainDefinitionRegistry</span><span class="p">);</span>
+<span class="nv">$definitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CacheDefinitionRegistry</span><span class="p">(</span><span class="nv">$phpDefinitionRegistry</span><span class="p">);</span>
+
+<span class="c1">// PHP cache definition registry will extensively use the proxy pattern in order</span>
+<span class="c1">// to lazy load entity definitions while browsing the entity graph, so it needs</span>
+<span class="c1">// a reference to the facade definition registry (i.e. the one doing caching):</span>
+<span class="nv">$phpDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">setParentDefinitionRegistry</span><span class="p">(</span><span class="nv">$definitionRegistry</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Per default, PHP code will be generated in <code class="docutils literal notranslate"><span class="pre">\sys_get_temp_dir()</span></code> which may be
+forbidden using <code class="docutils literal notranslate"><span class="pre">open_basedir()</span></code>. You can set this folder pretty much anywhere:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$phpDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">setGeneratedFileDirectory</span><span class="p">(</span><span class="s1">&#39;/some/path/&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>&#64;todo autoload files and composer for even faster loading.</p>
+</div>
+<div class="section" id="setup-the-entity-hydrator">
+<h3>Setup the entity hydrator<a class="headerlink" href="#setup-the-entity-hydrator" title="Permalink to this headline">¶</a></h3>
+<p>Of course, everything is about loading entities, so we also need an hydrator
+for those.</p>
+<div class="section" id="using-makinacorpus-generated-hydrator-bundle">
+<h4>Using <cite>makinacorpus/generated-hydrator-bundle</cite><a class="headerlink" href="#using-makinacorpus-generated-hydrator-bundle" title="Permalink to this headline">¶</a></h4>
+<p>An easy way to setup an hydrator is by using <code class="docutils literal notranslate"><span class="pre">makinacorpus/generated-hydrator-bundle</span></code>
+(even if documented as such, you don’t need Symfony to make it work).</p>
+<p>Pre-requisites:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For this, we consider that you have setup a definition registry as
+described above, we will reference it as <code class="docutils literal notranslate"><span class="pre">$definitionRegistry</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>First install it:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>composer require makinacorpus/generated-hydrator-bundle
+</pre></div>
+</div>
+<p>Then set it up:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">GeneratedHydrator\Bridge\Symfony\DefaultHydrator</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Hydration\EntityHydrator\EntityHydratorFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Hydration\HydratorRegistry\GeneratedHydratorBundleHydratorRegistry</span><span class="p">;</span>
+
+<span class="nv">$entityHydrator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">EntityHydratorFactory</span><span class="p">(</span>
+    <span class="nv">$definitionRegistry</span><span class="p">,</span>
+    <span class="k">new</span> <span class="nx">GeneratedHydratorBundleHydratorRegistry</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nx">DefaultHydrator</span><span class="p">(</span>
+            <span class="nx">\sys_get_temp_dir</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Please note that later, you will be able to use <code class="docutils literal notranslate"><span class="pre">ocramius/generated-hydrator</span></code>
+directly instead.</p>
+<p>&#64;todo</p>
+</div>
+<div class="section" id="custom-implementation">
+<h4>Custom implementation<a class="headerlink" href="#custom-implementation" title="Permalink to this headline">¶</a></h4>
+<p>&#64;todo</p>
+</div>
+</div>
+<div class="section" id="setup-repository-registry-optional">
+<h3>Setup repository registry (optional)<a class="headerlink" href="#setup-repository-registry-optional" title="Permalink to this headline">¶</a></h3>
+<p>Repository registry is the component responsible for loading repositories
+when they are request.</p>
+<p>In order to achieve this, it uses a repository factory, responsible for creating
+the repository instances.</p>
+<p>It works like the definition registry, and uses a chain implementation in order
+to be able to use different factories:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\Factory\ChainRepositoryFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\Factory\DefaultRepositoryFactory</span><span class="p">;</span>
+
+<span class="nv">$chainRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ChainRepositoryFactory</span><span class="p">();</span>
+<span class="nv">$repositoryRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultRepositoryRegistry</span><span class="p">(</span><span class="nv">$chainRepositoryFactory</span><span class="p">);</span>
+
+<span class="nv">$chainRepositoryFactory</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$defaultRepositoryFactory</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now, you may register your custom factories:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\Factory\ChainRepositoryFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\Factory\DefaultRepositoryFactory</span><span class="p">;</span>
+
+<span class="nv">$chainRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ChainRepositoryFactory</span><span class="p">();</span>
+<span class="nv">$repositoryRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultRepositoryRegistry</span><span class="p">(</span><span class="nv">$chainRepositoryFactory</span><span class="p">);</span>
+
+<span class="nv">$defaultRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultRepositoryFactory</span><span class="p">();</span>
+<span class="nv">$customRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyApplicationRepositoryFactory</span><span class="p">();</span>
+
+<span class="nv">$chainRepositoryFactory</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$customRepositoryFactory</span><span class="p">);</span>
+<span class="nv">$chainRepositoryFactory</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$defaultRepositoryFactory</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Most repository factory will need the entity manager dependency in order to
+inject it into newly instanciated repositories.</p>
+<p>&#64;todo link below</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful, order matters: the default repository implementation should
+always come last, otherwise it would hide other implementations.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instanciating a repository registry is optional, if you don’t need custom
+repository implementation, default implementations will be instanciated
+automatically.</p>
+</div>
+</div>
+<div class="section" id="setup-the-entity-manager">
+<h3>Setup the entity manager<a class="headerlink" href="#setup-the-entity-manager" title="Permalink to this headline">¶</a></h3>
+<p>Manager is the only dependency you code will need once it is setup. It knows
+the entity definition registry, and is able to build complex SQL queries for
+you.</p>
+<p>Pre-requisites:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For this, we consider that you have setup a definition registry as
+described above, we will reference it as <code class="docutils literal notranslate"><span class="pre">$definitionRegistry</span></code>.</p></li>
+<li><p>You need the entity hydrator as well, as saw above, we will reference
+it as <code class="docutils literal notranslate"><span class="pre">$entityHydrator</span></code>.</p></li>
+<li><p>You also need a working database connection as described on top of
+this documentation, we will reference it as <code class="docutils literal notranslate"><span class="pre">$runner</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>Seting it up is as easy as:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\DefaultEntityManager</span><span class="p">;</span>
+
+<span class="nv">$entityManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultEntityManager</span><span class="p">(</span>
+    <span class="nv">$runner</span><span class="p">,</span>
+    <span class="nv">$definitionRegistry</span><span class="p">,</span>
+    <span class="nv">$entityHydrator</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>If you created a repository registry, you should inject it as the fourth
+parameter of the default entity manager as such:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\DefaultEntityManager</span><span class="p">;</span>
+
+<span class="nv">$entityManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultEntityManager</span><span class="p">(</span>
+    <span class="nv">$runner</span><span class="p">,</span>
+    <span class="nv">$definitionRegistry</span><span class="p">,</span>
+    <span class="nv">$entityHydrator</span><span class="p">,</span>
+    <span class="nv">$repositoryRegistry</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Repository registry is optional, if you don’t need custom repository
+implementations, ignore this parameter, default repositories will be
+instanciated automatically on-demand for you.</p>
+</div>
+</div>
+<div class="section" id="inject-entity-manager-dependency">
+<h3>Inject entity manager dependency<a class="headerlink" href="#inject-entity-manager-dependency" title="Permalink to this headline">¶</a></h3>
+<p>Final step is to inject the entity manager instance to implementations that
+need it in order to solve circular dependencies between components.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="nv">$customRepositoryFactory</span><span class="o">-&gt;</span><span class="na">setEntityManager</span><span class="p">(</span><span class="nv">$entityManager</span><span class="p">);</span>
+<span class="nv">$defaultRepositoryFactory</span><span class="o">-&gt;</span><span class="na">setEntityManager</span><span class="p">(</span><span class="nv">$entityManager</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wrapping-it-up">
+<h3>Wrapping it up<a class="headerlink" href="#wrapping-it-up" title="Permalink to this headline">¶</a></h3>
+<p>Here is a complete sample of full initialization:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">use</span> <span class="nx">GeneratedHydrator\Bridge\Symfony\DefaultHydrator</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Driver\Configuration</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Driver\ExtPgSQLDriver</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\DefaultEntityManager</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Cache\Definition\Registry\PhpDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\CacheDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\ChainDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\StaticEntityDefinitionRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Hydration\EntityHydrator\EntityHydratorFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Hydration\HydratorRegistry\GeneratedHydratorBundleHydratorRegistry</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\Factory\ChainRepositoryFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\Factory\DefaultRepositoryFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Sample\Repository\Factory\MyApplicationRepositoryFactory</span><span class="p">;</span>
+
+<span class="c1">// Definition registry</span>
+
+<span class="nv">$chainDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ChainDefinitionRegistry</span><span class="p">();</span>
+<span class="nv">$phpDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PhpDefinitionRegistry</span><span class="p">(</span><span class="nv">$chainDefinitionRegistry</span><span class="p">);</span>
+<span class="nv">$definitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CacheDefinitionRegistry</span><span class="p">(</span><span class="nv">$phpDefinitionRegistry</span><span class="p">);</span>
+
+<span class="nv">$phpDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">setParentDefinitionRegistry</span><span class="p">(</span><span class="nv">$definitionRegistry</span><span class="p">);</span>
+
+<span class="nv">$staticDefinitionRegistry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StaticEntityDefinitionRegistry</span><span class="p">();</span>
+<span class="nv">$staticDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">setParentDefinitionRegistry</span><span class="p">(</span><span class="nv">$definitionRegistry</span><span class="p">);</span>
+<span class="nv">$chainDefinitionRegistry</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$staticDefinitionRegistry</span><span class="p">);</span>
+
+<span class="c1">// Entity hydrator</span>
+
+<span class="nv">$entityHydrator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">EntityHydratorFactory</span><span class="p">(</span>
+    <span class="nv">$definitionRegistry</span><span class="p">,</span>
+    <span class="k">new</span> <span class="nx">GeneratedHydratorBundleHydratorRegistry</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nx">DefaultHydrator</span><span class="p">(</span>
+            <span class="nx">\sys_get_temp_dir</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Database connection</span>
+
+<span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ExtPgSQLDriver</span><span class="p">();</span>
+<span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">setConfiguration</span><span class="p">(</span>
+    <span class="nx">Configuration</span><span class="o">::</span><span class="na">fromString</span><span class="p">(</span>
+        <span class="s2">&quot;pgsql://user:password@hostname:port/database&quot;</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+<span class="nv">$runner</span> <span class="o">=</span> <span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">();</span>
+
+<span class="c1">// Repository registry</span>
+
+<span class="nv">$chainRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ChainRepositoryFactory</span><span class="p">();</span>
+<span class="nv">$defaultRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultRepositoryFactory</span><span class="p">();</span>
+<span class="nv">$customRepositoryFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyApplicationRepositoryFactory</span><span class="p">();</span>
+
+<span class="nv">$chainRepositoryFactory</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$customRepositoryFactory</span><span class="p">);</span>
+<span class="nv">$chainRepositoryFactory</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$defaultRepositoryFactory</span><span class="p">);</span>
+
+<span class="c1">// Entity manager</span>
+
+<span class="nv">$entityManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DefaultEntityManager</span><span class="p">(</span>
+    <span class="nv">$runner</span><span class="p">,</span>
+    <span class="nv">$definitionRegistry</span><span class="p">,</span>
+    <span class="nv">$entityHydrator</span>
+<span class="p">);</span>
+
+<span class="nv">$customRepositoryFactory</span><span class="o">-&gt;</span><span class="na">setEntityManager</span><span class="p">(</span><span class="nv">$entityManager</span><span class="p">);</span>
+<span class="nv">$defaultRepositoryFactory</span><span class="o">-&gt;</span><span class="na">setEntityManager</span><span class="p">(</span><span class="nv">$entityManager</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Of course, adapt to your needs or your framework and tooling.</p>
+<p>Now, you are ready to setup your entity definitions.</p>
+<p>&#64;todo link to entity definition documentation</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cache.html" class="btn btn-neutral float-right" title="Tuning cache" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Installation and configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

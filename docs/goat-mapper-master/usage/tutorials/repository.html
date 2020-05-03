@@ -1,0 +1,694 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Repository &mdash; Goat Mapper 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Object hydration" href="../../hydrator/index.html" />
+    <link rel="prev" title="Tutorials" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Goat Mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Installation and configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../entity.html">Define entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../query.html">Querying and loading your data</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Repository</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#define-your-entity">Define your entity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#define-your-repository-interface">Define your repository interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#implement-your-repository-interface">Implement your repository interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-your-repository">Register your repository</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../hydrator/index.html">Object hydration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Goat Mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Usage</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+        
+      <li>Repository</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/usage/tutorials/repository.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="repository">
+<span id="id1"></span><h1>Repository<a class="headerlink" href="#repository" title="Permalink to this headline">¶</a></h1>
+<p>Repository is a classic persistence pattern, this API doesn’t aim to implement
+those for you, but gives you a basic tooling for getting started with them,
+register them, and tie them with the query builder.</p>
+<p>This tutorial will show you how to:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>define a custom entity,</p></li>
+<li><p>define a repository interface for this entity,</p></li>
+<li><p>implement the repository interface using the abstract repository
+implementation,</p></li>
+<li><p>register your custom repository using a repository factory,</p></li>
+<li><p>optionally, instead of using a custom repository factory, use the
+Symfony bundle container to register it automatically,</p></li>
+<li><p>fetch the repository instance and use it.</p></li>
+</ul>
+</div></blockquote>
+<p>During this whole tutorial, consider <code class="docutils literal notranslate"><span class="pre">Goat\Mapper\Sample</span></code> to be your own
+<code class="docutils literal notranslate"><span class="pre">Vendor\Application</span></code> namespace.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find the working code in the <code class="docutils literal notranslate"><span class="pre">samples/</span></code> directory.</p>
+</div>
+<div class="section" id="define-your-entity">
+<h2>Define your entity<a class="headerlink" href="#define-your-entity" title="Permalink to this headline">¶</a></h2>
+<p>There are mutiple ways to define an entity, for the sake of example we will
+proceed with the simple way to do it, using the static “definition builder” (&#64;todo link).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please see the “Define entities” (&#64;todo link) section for more options on how to define
+an entity.</p>
+</div>
+<p>First we will start with the following SQL table:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;blog_post&quot;</span> <span class="p">(</span>
+    <span class="ss">&quot;id&quot;</span> <span class="n">uuid</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="ss">&quot;author&quot;</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="ss">&quot;created_at&quot;</span> <span class="k">timestamp</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">current_timestamp</span><span class="p">,</span>
+    <span class="ss">&quot;updated_at&quot;</span>  <span class="k">timestamp</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">current_timestamp</span><span class="p">,</span>
+    <span class="ss">&quot;title&quot;</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="ss">&quot;content&quot;</span> <span class="nb">text</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">&quot;id&quot;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>For the same of keeping the example simple, we will not add foreign keys at the
+begining.</p>
+<p>Define your PHP entity class as such:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="nx">Goat\Mapper\Sample\Model</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\Uuid</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\UuidInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">BlogPost</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="o">?</span><span class="nx">UuidInterface</span> <span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">string</span> <span class="nv">$author</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">\DateTimeInterface</span> <span class="nv">$createdAt</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">\DateTimeInterface</span> <span class="nv">$updatedAt</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">string</span> <span class="nv">$title</span><span class="p">;</span>
+    <span class="k">private</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$content</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getId</span><span class="p">()</span><span class="o">:</span> <span class="nx">UuidInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span> <span class="o">??</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span> <span class="o">=</span> <span class="nx">Uuid</span><span class="o">::</span><span class="na">uuid4</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getAuthorName</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">author</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getCreationDate</span><span class="p">()</span><span class="o">:</span> <span class="nx">\DateTimeInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createdAt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getUpdateDate</span><span class="p">()</span><span class="o">:</span> <span class="nx">\DateTimeInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">updatedAt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getTitle</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getContent</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">body</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then add the <code class="docutils literal notranslate"><span class="pre">Goat\Mapper\Definition\Registry\StaticEntityDefinition</span></code>
+interface and implementation:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="nx">Goat\Mapper\Sample\Model</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Builder\DefinitionBuilder</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Definition\Registry\StaticEntityDefinition</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\Uuid</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\UuidInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">BlogPost</span> <span class="k">implements</span> <span class="nx">StaticEntityDefinition</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="o">?</span><span class="nx">UuidInterface</span> <span class="nv">$id</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">string</span> <span class="nv">$author</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">\DateTimeInterface</span> <span class="nv">$createdAt</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">\DateTimeInterface</span> <span class="nv">$updatedAt</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">string</span> <span class="nv">$title</span><span class="p">;</span>
+    <span class="k">private</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$content</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">defineEntity</span><span class="p">(</span><span class="nx">DefinitionBuilder</span> <span class="nv">$builder</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setTableName</span><span class="p">(</span><span class="s1">&#39;blog_post&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">addProperty</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">addProperty</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">addProperty</span><span class="p">(</span><span class="s1">&#39;createdAt&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">addProperty</span><span class="p">(</span><span class="s1">&#39;updatedAt&#39;</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">addProperty</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">addProperty</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setPrimaryKey</span><span class="p">([</span>
+            <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;uuid&#39;</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getId</span><span class="p">()</span><span class="o">:</span> <span class="nx">UuidInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span> <span class="o">??</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span> <span class="o">=</span> <span class="nx">Uuid</span><span class="o">::</span><span class="na">uuid4</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getAuthorName</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">author</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getCreationDate</span><span class="p">()</span><span class="o">:</span> <span class="nx">\DateTimeInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createdAt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getUpdateDate</span><span class="p">()</span><span class="o">:</span> <span class="nx">\DateTimeInterface</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">updatedAt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getTitle</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getContent</span><span class="p">()</span><span class="o">:</span> <span class="o">?</span><span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">body</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we have an automatically-registered entity, you can already start using
+the query builder to load and hydrate those from database.</p>
+</div>
+<div class="section" id="define-your-repository-interface">
+<h2>Define your repository interface<a class="headerlink" href="#define-your-repository-interface" title="Permalink to this headline">¶</a></h2>
+<p>Next step is defining what are the methods your domain need for persisting your
+entities, let’s arbitrary choose some for the sake of example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="nx">Goat\Mapper\Sample\Model</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Sample\Model\BlogPost</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Runner\ResultIterator</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\UuidInterface</span><span class="p">;</span>
+
+<span class="k">interface</span> <span class="nx">BlogPostRepository</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Find a single blog post.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">find</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">BlogPost</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Find a single blog post or die.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findOrDie</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Find entries by author.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return BlogPost[]</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findMostRecentForAuthor</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$author</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResultIterator</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Create new blog post.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$title</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">,</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$author</span> <span class="o">=</span> <span class="s1">&#39;Anonymous&#39;</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Update blog post and return updated instance.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">updateContent</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$title</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Delete blog post entry and return deleted instance.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">delete</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implement-your-repository-interface">
+<h2>Implement your repository interface<a class="headerlink" href="#implement-your-repository-interface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="class-declaration">
+<h3>Class declaration<a class="headerlink" href="#class-declaration" title="Permalink to this headline">¶</a></h3>
+<p>Start by the class declaration. In order to be able to implement this repository
+easily, you may use the <code class="docutils literal notranslate"><span class="pre">Goat\Mapper\Repository\AbstractRepository</span></code> abstract
+class as base.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="nx">Goat\Mapper\Sample\Model</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Sample\Model\BlogPost</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\AbstractRepository</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Query\Query</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Runner\ResultIterator</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\Uuid</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\UuidInterface</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">DefaultBlogPostRepository</span> <span class="k">extends</span> <span class="nx">AbstractRepository</span> <span class="k">implements</span> <span class="nx">BlogPostRepository</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">find</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented yet.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findOrDie</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented yet.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findMostRecentForAuthor</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$author</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$limit</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResultIterator</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented yet.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$title</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$author</span> <span class="o">=</span> <span class="s1">&#39;Anonymous&#39;</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented yet.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">updateContent</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$title</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented yet.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">delete</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Not implemented yet.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we can implement repository methods.</p>
+</div>
+<div class="section" id="read-methods">
+<h3>Read methods<a class="headerlink" href="#read-methods" title="Permalink to this headline">¶</a></h3>
+<p>&#64;todo</p>
+</div>
+<div class="section" id="write-methods">
+<h3>Write methods<a class="headerlink" href="#write-methods" title="Permalink to this headline">¶</a></h3>
+<p>&#64;todo</p>
+</div>
+<div class="section" id="wrapping-up">
+<h3>Wrapping up<a class="headerlink" href="#wrapping-up" title="Permalink to this headline">¶</a></h3>
+<p>Here is the complete class implementation:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="nx">Goat\Mapper\Sample\Model</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Goat\Mapper\Sample\Model\BlogPost</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Mapper\Repository\AbstractRepository</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Query\Query</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Goat\Runner\ResultIterator</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\Uuid</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Ramsey\Uuid\UuidInterface</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">DefaultBlogPostRepository</span> <span class="k">extends</span> <span class="nx">AbstractRepository</span> <span class="k">implements</span> <span class="nx">BlogPostRepository</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">find</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="o">?</span><span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="c1">// We do not use the goat-query query builder directly but the high</span>
+        <span class="c1">// level API for querying data, it will have a minor CPU bound perf</span>
+        <span class="c1">// impact, but it will set up the entity hydrator for eager loading</span>
+        <span class="c1">// all entity relations that can be eagerly loaded, and setup the</span>
+        <span class="c1">// lazy relation fetcher as well.</span>
+        <span class="k">return</span> <span class="nv">$this</span>
+            <span class="o">-&gt;</span><span class="na">query</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">matches</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">build</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">fetch</span><span class="p">()</span>
+        <span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findOrDie</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="nv">$ret</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$ret</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">\InvalidArgumentException</span><span class="p">(</span><span class="nx">\sprintf</span><span class="p">(</span>
+                <span class="s2">&quot;Blog post with id &#39;%s&#39; does not exist&quot;</span><span class="p">,</span>
+                <span class="nv">$id</span><span class="o">-&gt;</span><span class="na">toString</span><span class="p">()</span>
+            <span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nv">$ret</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findMostRecentForAuthor</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$author</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$limit</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span><span class="o">:</span> <span class="nx">ResultIterator</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span>
+            <span class="o">-&gt;</span><span class="na">query</span><span class="p">()</span>
+
+            <span class="c1">// Note that we could have set conditions on pretty any property</span>
+            <span class="c1">// of the entity, match condition can target column names as well</span>
+            <span class="c1">// if they differ from the property names.</span>
+            <span class="c1">// You can also match related entities conditions, but this entity</span>
+            <span class="c1">// has none for now.</span>
+            <span class="o">-&gt;</span><span class="na">matches</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="nv">$author</span><span class="p">)</span>
+
+            <span class="c1">// Also take note that once the build() method is called, you get</span>
+            <span class="c1">// the raw goat-query query instead, from that point, everything</span>
+            <span class="c1">// you add will be raw SQL, you MUST target SQL column names and</span>
+            <span class="c1">// not entity property anymore.</span>
+            <span class="o">-&gt;</span><span class="na">build</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="nx">Query</span><span class="o">::</span><span class="na">ORDER_DESC</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">range</span><span class="p">(</span><span class="nv">$limit</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span>
+        <span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$title</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$author</span> <span class="o">=</span> <span class="s1">&#39;Anonymous&#39;</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="nv">$insert</span> <span class="o">=</span> <span class="nv">$this</span>
+            <span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">insertValues</span><span class="p">(</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getRelation</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">values</span><span class="p">([</span>
+                <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nx">Uuid</span><span class="o">::</span><span class="na">uuid4</span><span class="p">(),</span>
+                <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+                <span class="s1">&#39;content&#39;</span> <span class="o">=&gt;</span> <span class="nv">$content</span><span class="p">,</span>
+                <span class="s1">&#39;author&#39;</span> <span class="o">=&gt;</span> <span class="nv">$author</span><span class="p">,</span>
+            <span class="p">])</span>
+        <span class="p">;</span>
+
+        <span class="c1">// This will add a pgsql RETURNING clause on the query.</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addQueryReturningClause</span><span class="p">(</span><span class="nv">$insert</span><span class="p">);</span>
+
+        <span class="c1">// This will prepare the entity hydrator and set it on the query,</span>
+        <span class="c1">// since we added a RETURNING clause, returned values will be used</span>
+        <span class="c1">// as if they where a classical SELECT in order to hydrate returned</span>
+        <span class="c1">// entity.</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addQueryEntityHydrator</span><span class="p">(</span><span class="nv">$insert</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$insert</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">updateContent</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$title</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$content</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="nv">$insert</span> <span class="o">=</span> <span class="nv">$this</span>
+            <span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getRelation</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="nv">$content</span><span class="p">)</span>
+        <span class="p">;</span>
+
+        <span class="c1">// See commends in create() method.</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addQueryReturningClause</span><span class="p">(</span><span class="nv">$insert</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addQueryEntityHydrator</span><span class="p">(</span><span class="nv">$insert</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$insert</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * {@inheritdoc}</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">delete</span><span class="p">(</span><span class="nx">UuidInterface</span> <span class="nv">$id</span><span class="p">)</span><span class="o">:</span> <span class="nx">BlogPost</span>
+    <span class="p">{</span>
+        <span class="nv">$delete</span> <span class="o">=</span> <span class="nv">$this</span>
+            <span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getRelation</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
+        <span class="p">;</span>
+
+        <span class="c1">// See commends in create() method.</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addQueryReturningClause</span><span class="p">(</span><span class="nv">$delete</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addQueryEntityHydrator</span><span class="p">(</span><span class="nv">$delete</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$delete</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="register-your-repository">
+<h2>Register your repository<a class="headerlink" href="#register-your-repository" title="Permalink to this headline">¶</a></h2>
+<p>&#64;todo</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../hydrator/index.html" class="btn btn-neutral float-right" title="Object hydration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Pierre Rineau &lt;pierre.rineau@makina-corpus.com&gt;
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
