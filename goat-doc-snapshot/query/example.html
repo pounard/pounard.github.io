@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>A basic example &mdash; Goat 1.0.0 documentation</title>
+  <title>A basic example &mdash; Goat 2.0.0-master documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                2.0
               </div>
             
           
@@ -274,8 +274,8 @@ can done using method call chaining.</p>
     <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;task_note.type&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">orderByExpression</span><span class="p">(</span><span class="s1">&#39;count(task_note.nid)&#39;</span><span class="p">,</span> <span class="nx">Query</span><span class="o">::</span><span class="na">ORDER_DESC</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;task.user_id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;task.deadline &lt; now()&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;task.user_id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="s1">&#39;task.deadline &lt; now()&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">havingExpression</span><span class="p">(</span><span class="s1">&#39;count(task_note.nid) &lt; ?&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>

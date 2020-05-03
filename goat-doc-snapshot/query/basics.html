@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Concepts &mdash; Goat 1.0.0 documentation</title>
+  <title>Concepts &mdash; Goat 2.0.0-master documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                2.0
               </div>
             
           
@@ -236,11 +236,25 @@ an arbitrary raw expression to the where clause:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
 <span class="c1">// WHERE COUNT(comment) &gt; 5</span>
-<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;COUNT(comment) &gt; ?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
+<span class="nv">$select</span><span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="s1">&#39;COUNT(comment) &gt; ?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Parameter placeholders will be gracefully merged to the others in their
 rightful respective order at execute time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to escape the <code class="docutils literal notranslate"><span class="pre">?</span></code> character, double it, hence the following
+SQL query:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">bar</span> <span class="o">??</span> <span class="n">foo</span> <span class="k">WHERE</span> <span class="n">baz</span> <span class="o">=</span> <span class="o">?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>will be sent to the driver rewritten as such:</p>
+<blockquote>
+<div><p>SELECT bar ? foo WHERE baz = ‘your value’;</p>
+</div></blockquote>
+<p>PDO for PHP 7.4 is supported as well, all <code class="docutils literal notranslate"><span class="pre">?</span></code> chars will be sent
+doubled as well.</p>
+</div>
 </div>
 <div class="section" id="available-expressions">
 <h2>Available expressions<a class="headerlink" href="#available-expressions" title="Permalink to this headline">¶</a></h2>

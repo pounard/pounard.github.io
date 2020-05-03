@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>WHERE (predicates) &mdash; Goat 1.0.0 documentation</title>
+  <title>WHERE (predicates) &mdash; Goat 2.0.0-master documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                2.0
               </div>
             
           
@@ -191,7 +191,7 @@ SELECT query with any values:</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -212,7 +212,7 @@ SELECT query with any values:</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;some_date&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(),</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;some_date&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(),</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -234,7 +234,7 @@ conditions there:</p>
 <span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nx">\Goat\Query\Where</span> <span class="nv">$where</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nx">\Goat\Query\Where</span> <span class="nv">$where</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$where</span>
             <span class="o">-&gt;</span><span class="na">isEqual</span><span class="p">(</span><span class="s1">&#39;some_table.id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">isGreaterOrEqual</span><span class="p">(</span><span class="s1">&#39;some_table.birthdate&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">\DateTimeImmutable</span><span class="p">(</span><span class="s1">&#39;2019-09-24&#39;</span><span class="p">))</span>
@@ -274,7 +274,7 @@ can be raw strings that may conflict with existing PHP function names,
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -294,7 +294,7 @@ builder will do it for you.</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;NOT IN&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;NOT IN&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 
 <span class="c1">// Or</span>
@@ -303,7 +303,7 @@ builder will do it for you.</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">NOT_IN</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">NOT_IN</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -332,14 +332,14 @@ it depending on the value type.</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;other_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 
 <span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -358,7 +358,7 @@ it depending on the value type.</p>
 
 <span class="nv">$inSelect</span> <span class="o">=</span> <span class="nv">$runner</span>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
-    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;other_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;other_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 
 <span class="c1">// ...</span>
@@ -367,7 +367,7 @@ it depending on the value type.</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">,</span> <span class="s1">&#39;NOT IN&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">,</span> <span class="s1">&#39;NOT IN&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 
 <span class="c1">// Or</span>
@@ -376,7 +376,7 @@ it depending on the value type.</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">,</span> <span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">NOT_IN</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="nv">$inSelect</span><span class="p">,</span> <span class="nx">\Goat\Query\Where</span><span class="o">::</span><span class="na">NOT_IN</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -405,7 +405,7 @@ in the <code class="docutils literal notranslate"><span class="pre">WHERE</span>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -421,7 +421,7 @@ the expression:</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
     <span class="p">})</span>
 <span class="p">;</span>
@@ -435,7 +435,7 @@ the expression:</p>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">ExpressionRaw</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">);</span>
     <span class="p">})</span>
 <span class="p">;</span>
@@ -449,7 +449,7 @@ which is the main query where, in this case, you don’t need to return a value:
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nx">\Goat\Query\Where</span> <span class="nv">$where</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nx">\Goat\Query\Where</span> <span class="nv">$where</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$where</span><span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">);</span>
     <span class="p">})</span>
 <span class="p">;</span>

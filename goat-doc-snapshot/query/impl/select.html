@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SELECT &mdash; Goat 1.0.0 documentation</title>
+  <title>SELECT &mdash; Goat 2.0.0-master documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                2.0
               </div>
             
           
@@ -471,7 +471,7 @@ parameter or the <cite>joinWhere()</cite> 3rd parameter:</p>
 <span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">expression</span><span class="p">(</span><span class="s1">&#39;SUM(t.a)&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">whereExpression</span><span class="p">(</span><span class="s1">&#39;SUM(t.a)&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;t.b&#39;</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
@@ -604,7 +604,7 @@ ORDER BY (
 <span class="nv">$select</span> <span class="o">=</span> <span class="nv">$runner</span>
     <span class="o">-&gt;</span><span class="na">getQueryBuilder</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">havingExpression</span><span class="p">(</span><span class="s1">&#39;COUNT(a) = ?&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -633,7 +633,7 @@ ORDER BY (
     <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">forUpdate</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>
@@ -650,7 +650,7 @@ ORDER BY (
     <span class="o">-&gt;</span><span class="na">forUpdate</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">performOnly</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">columns</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
-    <span class="o">-&gt;</span><span class="na">condition</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
 <span class="p">;</span>
 </pre></div>
 </div>

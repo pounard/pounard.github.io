@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; Goat 1.0.0 documentation</title>
+  <title>Getting started &mdash; Goat 2.0.0-master documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0
+                2.0
               </div>
             
           
@@ -187,7 +187,26 @@ than all the others.</p>
 </div>
 </li>
 <li><p>instanciate it:</p>
-<p>With PDO, via a TCP connection:</p>
+<p>Using a database URI:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Goat\Driver\Goat\Driver\DriverFactory</span><span class="p">;</span>
+
+<span class="nv">$driver</span> <span class="o">=</span> <span class="nx">DriverFactory</span><span class="o">::</span><span class="na">fromUri</span><span class="p">(</span><span class="s1">&#39;pdo-mysql://username:password@hostname:port/database?option1=foo&amp;option2=bar&#39;</span><span class="p">);</span>
+<span class="nv">$runner</span> <span class="o">=</span> <span class="nv">$driver</span><span class="o">-&gt;</span><span class="na">getRunner</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Supported drivers when using an URI scheme are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ext-pgsql</span></code>: PgSQL driver using <code class="docutils literal notranslate"><span class="pre">ext-pgsql</span></code> PHP core extension,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pdo-pgsql</span></code>: PgSQL driver using <code class="docutils literal notranslate"><span class="pre">PDO</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pdo-mysql</span></code>: MySQL driver using <code class="docutils literal notranslate"><span class="pre">PDO</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pgsql</span></code>: generic PostGreSQL, attempt using known drivers in order: <code class="docutils literal notranslate"><span class="pre">ext-pgsql</span></code>, <code class="docutils literal notranslate"><span class="pre">pdo-pgsql</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mysql</span></code>: generic MySQL, attempt using known drivers in order: <code class="docutils literal notranslate"><span class="pre">pdo-mysql</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>With PDO, via a TCP connection using option array:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
 <span class="k">use</span> <span class="nx">Goat\Driver\Configuration</span><span class="p">;</span>
