@@ -121,14 +121,41 @@ body {
     justify-content: flex-end;
 }
 
-.fg-w {
-    /* Nothing here? */
-}
-.fg-w-e {
+.fg-c > .fg-w-e {
     flex: auto;
 }
-.fg-w-s {
+.fg-c > .fg-w-s {
     flex: initial;
+}
+
+.fg-w-l {
+    text-align: left;
+}
+.fg-w-c {
+    text-align: center;
+}
+.fg-w-r {
+    text-align: right;
+}
+
+.fg-c-e {
+    /* if column, then flex: auto */
+}
+.fg-c-s {
+    /* if column, then flex: initial, fixed height to view port, overflow: scroll */
+}
+
+/*
+ * Forms.
+ */
+
+.fg-entry-text, .fg-entry-text-multi {
+    background: white;
+    margin: 0.5rem 1rem;
+}
+
+.fg-entry-text-multi {
+    flex: auto;
 }
 
 /*
@@ -218,12 +245,37 @@ body {
 .fg-listbox {
     display: table;
     width: 100%;
+    background: white;
 }
 .fg-listbox-row {
     display: table-row;
 }
 .fg-listbox-row-item {
     display: table-cell;
+    padding: 0.5rem 1rem;
+}
+.fg-listbox-row > .fg-w-s {
+    width: 1%;
+}
+
+/*
+ * TableView
+ */
+
+.fg-tableview {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+}
+.fg-tableview thead {
+    background: #f6f5f4;
+}
+.fg-tableview th, td {
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+}
+.fg-tableview-row td.fg-w-s {
+    width: 1%;
 }
 
 /*
@@ -253,7 +305,7 @@ body {
 .fg-notebook-in {
     background: #fff;
 }
-.fg-notebook-item > .fg-page {
+.fg-notebook-item {
     padding: 0.5rem 1rem;
     border: none;
 }
